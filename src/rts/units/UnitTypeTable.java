@@ -52,7 +52,7 @@ public class UnitTypeTable  {
      * alternating the units trying to move
      */
     public static final int MOVE_CONFLICT_RESOLUTION_CANCEL_ALTERNATING = 3;   
-    
+
     /**
      * The list of unit types allowed in the game
      */
@@ -89,7 +89,13 @@ public class UnitTypeTable  {
     public UnitTypeTable(int version, int crs) {
         setUnitTypeTable(version, crs);
     }
-    
+
+		/**
+		 * Returns a random value in [min, max]
+	   */
+	  public int random(int min, int max) {
+		    return min + (int)(Math.random() * (max+1-min));
+	  }
     
     /**
      * Sets the version and move conflict resolution strategy to use 
@@ -121,10 +127,15 @@ public class UnitTypeTable  {
         base.cost = 10;
         base.hp = 10;
         switch(version) {
-            case VERSION_ORIGINAL: base.produceTime = 250;
-                                   break;
-            case VERSION_ORIGINAL_FINETUNED: base.produceTime = 200;
-                                   break;
+            case VERSION_ORIGINAL:
+	            base.produceTime = 250;
+	            break;
+            case VERSION_ORIGINAL_FINETUNED:
+	            base.produceTime = 200;
+	            break;
+            case VERSION_NON_DETERMINISTIC:
+	            base.cost = random(5,15);
+	            break;
         }
         base.isResource = false;
         base.isStockpile = true;
@@ -144,8 +155,12 @@ public class UnitTypeTable  {
                 barracks.produceTime = 200;
                 break;
             case VERSION_ORIGINAL_FINETUNED: 
+                barracks.produceTime = 100;
+                break;
             case VERSION_NON_DETERMINISTIC:
                 barracks.produceTime = 100;
+                barracks.cost = random(3,8);
+                //barracks.produceTime = random(75, 125);
                 break;
         }
         barracks.isResource = false;
@@ -161,22 +176,26 @@ public class UnitTypeTable  {
         worker.name = "Worker";
         worker.cost = 1;
         worker.hp = 1;
+        worker.attackTime = 5;
+        worker.moveTime = 10;
+        worker.harvestTime = 20;
+        worker.returnTime = 10;
         switch(version) {
             case VERSION_ORIGINAL:
             case VERSION_ORIGINAL_FINETUNED:
                 worker.minDamage = worker.maxDamage = 1;
                 break;
             case VERSION_NON_DETERMINISTIC:
-                worker.minDamage = 0;
-                worker.maxDamage = 2;
+	              worker.moveTime = random(7,14);
+	              worker.harvestTime = random(10,30);
+	              worker.returnTime = random(7,14);
+                worker.minDamage = worker.maxDamage = 1;
+                worker.harvestAmount = random(1,2);
+                //worker.minDamage = worker.maxDamage = random(1,2);
                 break;
         }
         worker.attackRange = 1;
         worker.produceTime = 50;
-        worker.moveTime = 10;
-        worker.attackTime = 5;
-        worker.harvestTime = 20;
-        worker.returnTime = 10;
         worker.isResource = false;
         worker.isStockpile = false;
         worker.canHarvest = true;
@@ -196,8 +215,9 @@ public class UnitTypeTable  {
                 light.minDamage = light.maxDamage = 2;
                 break;
             case VERSION_NON_DETERMINISTIC:
-                light.minDamage = 1;
-                light.maxDamage = 3;
+                light.minDamage = light.maxDamage = 2;
+                light.cost = random(1,3);
+	              //light.minDamage = light.maxDamage = random(1,3);
                 break;
         }
         light.attackRange = 1;
@@ -221,12 +241,13 @@ public class UnitTypeTable  {
                 heavy.minDamage = heavy.maxDamage = 4;
                 break;
             case VERSION_NON_DETERMINISTIC:
-                heavy.minDamage = 0;
-                heavy.maxDamage = 6;
+	              heavy.minDamage = heavy.maxDamage = 4;
+	              //heavy.minDamage = heavy.maxDamage = random(1,6);
                 break;
         }
         heavy.attackRange = 1;
         heavy.produceTime = 120;
+        heavy.attackTime = 5;
         switch(version) {
             case VERSION_ORIGINAL: 
                 heavy.moveTime = 12;
@@ -234,13 +255,20 @@ public class UnitTypeTable  {
                 heavy.cost = 2;
                 break;
             case VERSION_ORIGINAL_FINETUNED: 
-            case VERSION_NON_DETERMINISTIC:
                 heavy.moveTime = 10;
                 heavy.hp = 8;
                 heavy.cost = 3;
                 break;
+            case VERSION_NON_DETERMINISTIC:
+                heavy.moveTime = 10;
+                heavy.hp = 8;
+	              //heavy.moveTime = random(8,12);
+	              //heavy.hp = random(4,8);
+	              heavy.cost = random(2,4);
+	              //heavy.attackTime = 5;
+	              //heavy.produceTime = 120;
+                break;
         }
-        heavy.attackTime = 5;
         heavy.isResource = false;
         heavy.isStockpile = false;
         heavy.canHarvest = false;
@@ -260,8 +288,7 @@ public class UnitTypeTable  {
                 ranged.minDamage = ranged.maxDamage = 1;
                 break;
             case VERSION_NON_DETERMINISTIC:
-                ranged.minDamage = 1;
-                ranged.maxDamage = 2;
+	              ranged.minDamage = ranged.maxDamage = random(1,2);
                 break;
         }
         ranged.attackRange = 3;
