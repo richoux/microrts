@@ -188,6 +188,9 @@ public class FEStatePane extends JPanel {
                                       new UnitTypeTable(UnitTypeTable.VERSION_NON_DETERMINISTIC, UnitTypeTable.MOVE_CONFLICT_RESOLUTION_CANCEL_BOTH),
                                       new UnitTypeTable(UnitTypeTable.VERSION_NON_DETERMINISTIC, UnitTypeTable.MOVE_CONFLICT_RESOLUTION_CANCEL_ALTERNATING),
                                       new UnitTypeTable(UnitTypeTable.VERSION_NON_DETERMINISTIC, UnitTypeTable.MOVE_CONFLICT_RESOLUTION_CANCEL_RANDOM),   
+                                      new UnitTypeTable(UnitTypeTable.VERSION_CHAOTIC, UnitTypeTable.MOVE_CONFLICT_RESOLUTION_CANCEL_BOTH),
+                                      new UnitTypeTable(UnitTypeTable.VERSION_CHAOTIC, UnitTypeTable.MOVE_CONFLICT_RESOLUTION_CANCEL_ALTERNATING),
+                                      new UnitTypeTable(UnitTypeTable.VERSION_CHAOTIC, UnitTypeTable.MOVE_CONFLICT_RESOLUTION_CANCEL_RANDOM),   
     };
     public static String unitTypeTableNames[] = {"Original-Both",
                                    "Original-Alternating",

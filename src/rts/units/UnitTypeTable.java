@@ -36,7 +36,12 @@ public class UnitTypeTable  {
      * A non-deterministic version (damages are random)
      */
     public static final int VERSION_NON_DETERMINISTIC = 3;
-    
+
+	  /**
+     * A chaotic version (many attributes are set to a random value, but it remains deterministic)
+     */
+    public static final int VERSION_CHAOTIC = 4;
+
     /**
      * A conflict resolution policy where move conflicts cancel both moves
      */
@@ -131,9 +136,10 @@ public class UnitTypeTable  {
 	            base.produceTime = 250;
 	            break;
             case VERSION_ORIGINAL_FINETUNED:
+            case VERSION_NON_DETERMINISTIC: 
 	            base.produceTime = 200;
 	            break;
-            case VERSION_NON_DETERMINISTIC:
+            case VERSION_CHAOTIC:
 	            base.cost = random(5,15);
 	            break;
         }
@@ -155,12 +161,12 @@ public class UnitTypeTable  {
                 barracks.produceTime = 200;
                 break;
             case VERSION_ORIGINAL_FINETUNED: 
+            case VERSION_NON_DETERMINISTIC: 
                 barracks.produceTime = 100;
-                break;
-            case VERSION_NON_DETERMINISTIC:
+                break;                
+            case VERSION_CHAOTIC:
                 barracks.produceTime = 100;
                 barracks.cost = random(3,8);
-                //barracks.produceTime = random(75, 125);
                 break;
         }
         barracks.isResource = false;
@@ -186,12 +192,15 @@ public class UnitTypeTable  {
                 worker.minDamage = worker.maxDamage = 1;
                 break;
             case VERSION_NON_DETERMINISTIC:
+	              worker.minDamage = 0;
+	              worker.maxDamage = 2;
+                break;
+            case VERSION_CHAOTIC:
 	              worker.moveTime = random(7,14);
 	              worker.harvestTime = random(10,30);
 	              worker.returnTime = random(7,14);
                 worker.minDamage = worker.maxDamage = 1;
                 worker.harvestAmount = random(1,2);
-                //worker.minDamage = worker.maxDamage = random(1,2);
                 break;
         }
         worker.attackRange = 1;
@@ -215,9 +224,12 @@ public class UnitTypeTable  {
                 light.minDamage = light.maxDamage = 2;
                 break;
             case VERSION_NON_DETERMINISTIC:
+	              worker.minDamage = 1;
+	              worker.maxDamage = 3;
+                break;
+            case VERSION_CHAOTIC:
                 light.minDamage = light.maxDamage = 2;
                 light.cost = random(1,3);
-	              //light.minDamage = light.maxDamage = random(1,3);
                 break;
         }
         light.attackRange = 1;
@@ -241,7 +253,11 @@ public class UnitTypeTable  {
                 heavy.minDamage = heavy.maxDamage = 4;
                 break;
             case VERSION_NON_DETERMINISTIC:
-	              heavy.minDamage = heavy.maxDamage = 4;
+	              worker.minDamage = 0;
+	              worker.maxDamage = 6;
+                break;
+            case VERSION_CHAOTIC:
+	              heavy.minDamage = heavy.maxDamage = 4; //used for CoG2020 experiments
 	              //heavy.minDamage = heavy.maxDamage = random(1,6);
                 break;
         }
@@ -255,13 +271,14 @@ public class UnitTypeTable  {
                 heavy.cost = 2;
                 break;
             case VERSION_ORIGINAL_FINETUNED: 
+            case VERSION_NON_DETERMINISTIC:
                 heavy.moveTime = 10;
                 heavy.hp = 8;
                 heavy.cost = 3;
                 break;
-            case VERSION_NON_DETERMINISTIC:
-                heavy.moveTime = 10;
-                heavy.hp = 8;
+            case VERSION_CHAOTIC:
+                heavy.moveTime = 10; //used for CoG2020 experiments
+                heavy.hp = 8; //used for CoG2020 experiments
 	              //heavy.moveTime = random(8,12);
 	              //heavy.hp = random(4,8);
 	              heavy.cost = random(2,4);
@@ -288,6 +305,10 @@ public class UnitTypeTable  {
                 ranged.minDamage = ranged.maxDamage = 1;
                 break;
             case VERSION_NON_DETERMINISTIC:
+	              ranged.minDamage = 1;
+	              ranged.maxDamage = 2;
+                break;
+            case VERSION_CHAOTIC:
 	              ranged.minDamage = ranged.maxDamage = random(1,2);
                 break;
         }
